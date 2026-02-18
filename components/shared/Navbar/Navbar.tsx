@@ -44,27 +44,34 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop Menu */}
-          <div className='hidden lg:flex items-center gap-12 text-base font-medium '>
-            <Link href='/'>
-              <p>Home</p>
-            </Link>
-            <Link href='/pricing'>
-              <p>Pricing</p>
-            </Link>
-            <Link href='/portfolio'>
-              <p>Portfolio</p>
-            </Link>
-             <Link href='/signup'>
-              {" "}
-              <SiteButton className='bg-[#B6C7F5]/30 w-full hover:bg-[#B6C7F5]/30'>
-               Sign In
-              </SiteButton>
-            </Link>
-            <div className='w-full sm:w-fit shadow-2xl'>
-              <SiteButton className='bg-[#B6C7F5]/30 w-full hover:bg-[#B6C7F5]/30'>
-                Start for Free
-              </SiteButton>
+          <div className='hidden lg:flex items-center lg:gap-30 xl:gap-40 2xl:gap-96 text-base font-medium '>
+
+            <div className=" lg:flex items-center gap-12 text-base font-medium">
+              <Link href='/'>
+                <p>Home</p>
+              </Link>
+              <Link href='/pricing'>
+                <p>Pricing</p>
+              </Link>
+              <Link href='/portfolio'>
+                <p>Portfolio</p>
+              </Link>
+
             </div>
+          
+           <div className="flex gap-8">
+              <Link href='/signup'>
+                {" "}
+                <SiteButton className='bg-[#B6C7F5]/30 w-full hover:bg-[#B6C7F5]/30'>
+                  Sign In
+                </SiteButton>
+              </Link>
+              <div className='w-full sm:w-fit shadow-2xl'>
+                <SiteButton className='bg-[#B6C7F5]/30 w-full hover:bg-[#B6C7F5]/30'>
+                  Start for Free
+                </SiteButton>
+              </div>
+           </div>
            
           </div>
 

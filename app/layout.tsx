@@ -5,7 +5,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 
 import Navbar from "@/components/shared/Navbar/Navbar";
-import Footer2 from "@/components/shared/Footer/Footer";
+import Footer from "@/components/shared/Footer/Footer";
 import ClientWrapper from "@/components/ClientWrapper";
 import StoreProviders from "../redux/StoreProviders";
 import AppInitializer from "@/redux/features/appInitilaze/Appintialize";
@@ -37,7 +37,7 @@ export default function RootLayout({
 
           <ClientWrapper>{children}</ClientWrapper>
           <Toaster position="top-right" />
-          <Footer2 />
+          <Footer />
         </StoreProviders>
       </body>
     </html>
