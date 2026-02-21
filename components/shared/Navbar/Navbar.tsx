@@ -1,14 +1,44 @@
 /** @format */
 "use client";
-
+import Cookies from "js-cookie";
 import React, { useEffect, useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, User, X } from "lucide-react";
 import Link from "next/link";
 import SiteButton from "../SiteButton";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { useRouter } from "next/navigation";
+import { logOut } from "@/redux/features/auth/authSlice";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const role = useAppSelector((state) => state.auth.role);
+
+  const router = useRouter();
+  const dispatch = useAppDispatch();
+  // const isAdmin = role === "ADMIN";
+  // console.log(isAdmin)
+
+  const token = Cookies.get("token") ?? null;
+
+
+  console.log("token", token);
+
+  const handleLogout = () => {
+    console.log("Logout");
+
+    // remove cookie
+    Cookies.remove("token");
+
+    // clear redux state
+    dispatch(logOut());
+
+    // refresh page
+    router.refresh();
+
+    // optional redirect
+    router.push("/login");
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -58,21 +88,25 @@ export default function Navbar() {
               </Link>
 
             </div>
-          
-           <div className="flex gap-8">
-              <Link href='/signup'>
-                {" "}
-                <SiteButton className='bg-[#B6C7F5]/30 w-full hover:bg-[#B6C7F5]/30'>
-                  Sign In
-                </SiteButton>
-              </Link>
-              <div className='w-full sm:w-fit shadow-2xl'>
-                <SiteButton className='bg-[#B6C7F5]/30 w-full hover:bg-[#B6C7F5]/30'>
-                  Start for Free
-                </SiteButton>
-              </div>
-           </div>
-           
+
+            <div className="flex gap-8">
+              {
+                token ? <div className="flex items-center justify-center border rounded-full w-10 h-10"><User /> </div> : <Link href='/login'>
+                  {" "}
+                  <SiteButton className='bg-[#B6C7F5]/30 w-full hover:bg-[#B6C7F5]/30'>
+                    Sign In
+                  </SiteButton>
+                </Link>
+              }
+            {
+                token ? <button onClick={handleLogout} className="px-4  py-2 rounded-md border bg-white text-black "> Logout</button> : <div className='w-full sm:w-fit shadow-2xl'>
+                  <SiteButton className='bg-[#B6C7F5]/30 w-full hover:bg-[#B6C7F5]/30'>
+                    Start for Free
+                  </SiteButton>
+                </div>
+            }
+            </div>
+
           </div>
 
           {/* Mobile Menu Icon */}

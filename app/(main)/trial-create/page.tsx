@@ -11,7 +11,7 @@ export default function TrialCreatePage() {
         const createTrial = async () => {
             const token = Cookies.get("token");
 
-            // ❌ not logged in
+       
             if (!token) {
                 router.replace("/login");
                 return;
@@ -29,7 +29,6 @@ export default function TrialCreatePage() {
                     }
                 );
 
-                // ❌ already has subscription or trial
                 if (res.status === 409 || res.status === 400) {
                     router.replace("/dashboard"); // or pricing if you want
                     return;
@@ -41,7 +40,7 @@ export default function TrialCreatePage() {
 
                 const data = await res.json();
 
-                // ✅ backend decides next step
+               
                 if (data.redirectUrl) {
                     router.replace(data.redirectUrl);
                 } else {

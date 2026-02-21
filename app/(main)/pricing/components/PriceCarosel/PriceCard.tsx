@@ -46,22 +46,27 @@ export default function PriceCard({
     try {
       const response = await createTrial({
         plan: title,
-        interval: packageType,
+        interval: packageType.toUpperCase(),
       }).unwrap();
+ console.log(response.message)
+      toast.success( response.message);
+      setTimeout(() => router.push("https://flow-edit-one.vercel.app/dashboard"), 2000);
 
-      if (response.success) {
-        toast.success("Trial started successfully");
-        setTimeout(() => router.push("/"), 500);
-        return;
+    } catch (error: any) {
+      const status = error?.status;
+
+      const message =
+        typeof error?.data?.message === "string"
+          ? error.data.message
+          : error?.data?.message?.message ||
+          "Something went wrong.";
+
+      if (status === 400 || status === 409) {
+        toast.warning(message || "You already have an active subscription.");
+        return; 
       }
 
-      toast.warning("You need to subscribe to continue");
-      setTimeout(() => router.push("/subscribe"), 800);
-    } catch (error: any) {
-      toast.error(
-        error?.data?.message || "Something went wrong. Please subscribe."
-      );
-      setTimeout(() => router.push("/"), 800);
+      toast.error(message);
     }
   };
 

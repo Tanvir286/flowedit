@@ -60,7 +60,9 @@ if (
       role: state?.auth?.role,
       user: state?.auth?.user,
     })
+    
   );
+   console.log(state?.auth?.role);
 
   result = await baseQuery(args, api, extraOptions);
 } else {

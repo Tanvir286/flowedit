@@ -1,13 +1,15 @@
 /** @format */
 "use client";
 
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, Router } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSignupMutation } from "@/redux/features/auth/authApi";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { SerializedError } from "@reduxjs/toolkit";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 type SignupFormData = {
   name: string;
@@ -25,6 +27,7 @@ export default function SignupPage() {
 
   const [showPassword, setShowPassword] = useState(false);
   const [apiError, setApiError] = useState<string | null>(null);
+  const router = useRouter();
 
   //  RTK Query hook
   const [signup, { isLoading }] = useSignupMutation();
@@ -34,20 +37,34 @@ export default function SignupPage() {
 
     try {
       await signup(data).unwrap();
-      alert("Registration successful!");
+
+      toast.success("Registration successful!");
+      router.push("/login")
       reset();
-      // router.push("/login");
     } catch (err: unknown) {
       let message = "Registration failed";
 
       if (typeof err === "object" && err !== null && "status" in err) {
         const fetchError = err as FetchBaseQueryError;
-        message =
-          (fetchError.data as { message?: string })?.message ??
-          "Unable to register";
-      } else {
-        const serializedError = err as SerializedError;
-        message = serializedError.message ?? message;
+
+        const status = fetchError.status;
+
+        if (
+          fetchError.data &&
+          typeof fetchError.data === "object" &&
+          "message" in fetchError.data
+        ) {
+          const backendMessage = (fetchError.data as { message?: string }).message;
+          message = backendMessage ?? message;
+        }
+
+       
+        if (status === 400 || status === 409) {
+          setApiError(message);
+
+          
+          return;
+        }
       }
 
       setApiError(message);
