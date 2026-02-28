@@ -8,7 +8,7 @@ import { Fullscreen } from "lucide-react";
 export default function SubscribePage() {
   return (
     <div>
-      {/* <h1>Subscription Payment Portal</h1> */}
+    
       <SubscriptionCheckout />
     </div>
   );
