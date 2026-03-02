@@ -71,10 +71,6 @@ const Banner = () => {
           backgroundImage: "url('/images/smallBg.png')",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
-          // maskImage:
-          //   "linear-gradient(to bottom, black 0%, black 50%, black 70%, rgba(0,0,0,0.5) 85%, rgba(0,0,0,0.1) 95%, transparent 100%)",
-          // WebkitMaskImage:
-          //   "linear-gradient(to bottom, black 0%, black 50%, black 70%, rgba(0,0,0,0.5) 85%, rgba(0,0,0,0.1) 95%, transparent 100%)",
         }}
       />
       <div className='absolute top-0 left-0 right-0 w-full z-10 pointer-events-none'>
