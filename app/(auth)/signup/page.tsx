@@ -185,9 +185,10 @@ export default function SignupPage() {
 
           {/* Submit */}
           <button
-            type='submit'
-            disabled={isLoading}
-            className='w-full rounded-xl bg-blue-600 text-white py-3 font-semibold hover:bg-blue-700 transition disabled:opacity-60'>
+            type="submit"
+            disabled={isLoading || !!errors.password || !!errors.email || !!errors.name}
+            className="w-full rounded-xl bg-blue-600 text-white py-3 font-semibold hover:bg-blue-700 transition disabled:opacity-60"
+          >
             {isLoading ? "Creating..." : "Sign Up"}
           </button>
 

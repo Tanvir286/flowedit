@@ -10,6 +10,7 @@ import ClientWrapper from "@/components/ClientWrapper";
 import StoreProviders from "../redux/StoreProviders";
 import AppInitializer from "@/redux/features/appInitilaze/Appintialize";
 import { Toaster } from "@/components/ui/sonner";
+import HydrateAuth from "./(main)/pricinfix/page";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -32,7 +33,7 @@ export default function RootLayout({
         <StoreProviders>
           {/* 🔥 Bootstrap auth + subscription once */}
           <AppInitializer />
-
+          <HydrateAuth/>
           <Navbar />
 
           <ClientWrapper>{children}</ClientWrapper>

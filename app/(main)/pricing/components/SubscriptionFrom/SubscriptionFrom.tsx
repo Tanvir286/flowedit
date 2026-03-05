@@ -13,6 +13,10 @@ import {
 import Cookies from "js-cookie";
 import { FormEvent, useMemo, useState } from "react";
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
+import { useRouter } from "next/navigation";
+import { useCreatePaymentMutation } from "@/redux/features/payment/paymentApi";
+import { useAppSelector } from "@/redux/hooks";
+import { toast } from 'sonner';
 
 type Plan = "CORE" | "GROWTH" | "PLUS";
 type Interval = "MONTHLY" | "SEMIANNUAL" | "ANNUAL";
@@ -25,12 +29,15 @@ interface BackendResponse {
 export default function SubscriptionForm() {
   const stripe = useStripe();
   const elements = useElements();
-
+const router = useRouter();
   const [plan, setPlan] = useState<Plan>("CORE");
   const [interval, setInterval] = useState<Interval>("MONTHLY");
   const [postalCode, setPostalCode] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
+   const [createPayment, { isLoading }] = useCreatePaymentMutation();
+    const { token } = useAppSelector((state) => state.auth);
+   
 
   const fetchUrl = useMemo(
     () => `${process.env.NEXT_PUBLIC_BACKEND_BASE}/payment/stripe/subscription`,
@@ -39,6 +46,7 @@ export default function SubscriptionForm() {
 
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    if (!token) return router.push("/signup");
 
     if (!stripe || !elements) {
       setMessage("Stripe loading...");
@@ -73,6 +81,8 @@ export default function SubscriptionForm() {
         return;
       }
 
+    
+
       const { error, paymentIntent } = await stripe.confirmCardPayment(
         data.client_secret,
         {
@@ -84,6 +94,7 @@ export default function SubscriptionForm() {
           },
         },
       );
+      
 
       if (error) {
         setMessage(error.message ?? "Payment failed");
@@ -91,10 +102,20 @@ export default function SubscriptionForm() {
       }
 
       if (paymentIntent?.status === "succeeded") {
-        setMessage("✅ Payment successful! Subscription active.");
+        setMessage(" Payment successful! Subscription active.");
+      const response = await createPayment({
+        plan: plan,
+        interval: interval.toUpperCase(),
+      }).unwrap();
+
+      
+        
+        toast.success(response.message);
+        router.push("/pricing"); 
       }
+      
     } catch {
-      setMessage("Network error occurred");
+      toast.error("Failed to update plan");
     } finally {
       setLoading(false);
     }

@@ -8,6 +8,7 @@ export const paymentApi = baseApi.injectEndpoints({
         method: "POST",
         body,
       }),
+       invalidatesTags: ["Auth"],
     }),
 
     createTrile: (builder.mutation({
@@ -16,6 +17,7 @@ export const paymentApi = baseApi.injectEndpoints({
         method: "POST",
         body,
       }),
+       invalidatesTags: ["Auth"],
     })),
   }),
 });

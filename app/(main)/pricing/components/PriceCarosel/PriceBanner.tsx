@@ -3,7 +3,8 @@
 import PageHeaderButton from "@/components/shared/PageHeaderButton";
 import ToggleSwitch, { PlanType } from "@/components/shared/ToggleSwitch";
 import Image from "next/image";
-import PriceCarosel from "./PriceCarosel";
+import PricingSection from "@/app/(dashboard)/dashboard/page";
+import PricingCard from "../Pricing/PricingCard";
 
 const PriceBanner = ({
   value,
@@ -61,10 +62,10 @@ const PriceBanner = ({
       </div>
 
       {/* CONTENT */}
-      <div className='container mx-auto flex flex-col gap-5 items-center mt-[100px] lg:mt-[185px] relative z-20'>
+      <div className='container flex flex-col gap-5 items-center mt-[100px] lg:mt-[185px] relative z-20'>
         <PageHeaderButton text='Pricing' />
 
-        <h1 className='font-semibold text-[44px] lg:text-[73px] -tracking-[0.04em] text-white text-center'>
+        <h1 className='font-semibold text-[44px] lg:text-[63px] -tracking-[0.04em] text-white text-center'>
           Stop Editing. <br className='block lg:hidden' /> Start growing
         </h1>
 
@@ -74,13 +75,14 @@ const PriceBanner = ({
           cheaper than what’s on the market
         </p>
 
+<PricingCard/>
         <div className='pb-[77px]'>
-          <ToggleSwitch value={value} onChange={onToggleChange} />
+          {/* <ToggleSwitch value={value} onChange={onToggleChange} /> */}
         </div>
       </div>
 
       {/* Pass planType to Carosel */}
-      <PriceCarosel planType={value} />
+      {/* <PriceCarosel planType={value} /> */}
     </div>
   );
 };

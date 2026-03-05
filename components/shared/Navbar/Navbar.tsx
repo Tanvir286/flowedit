@@ -27,10 +27,9 @@ export default function Navbar() {
   const handleLogout = () => {
     console.log("Logout");
 
-    // remove cookie
     Cookies.remove("token");
 
-    // clear redux state
+
     dispatch(logOut());
 
     // refresh page
@@ -68,45 +67,41 @@ export default function Navbar() {
  ${isScrolled ? "bg-white/80 backdrop-blur-md text-black shadow-md" : "bg-transparent text-white"}
 `}>
         <div className='flex items-center justify-between'>
-          <Link href='/'>
+          <Link href='/' className="min-w-[180px]">
             {" "}
             <p className='text-xl font-medium'>Flow Edit</p>
           </Link>
 
-          {/* Desktop Menu */}
-          <div className='hidden lg:flex items-center lg:gap-30 xl:gap-40 2xl:gap-96 text-base font-medium '>
 
-            <div className=" lg:flex items-center gap-12 text-base font-medium">
-              <Link href='/'>
-                <p>Home</p>
-              </Link>
-              <Link href='/pricing'>
-                <p>Pricing</p>
-              </Link>
-              <Link href='/portfolio'>
-                <p>Portfolio</p>
-              </Link>
+          <div className=" lg:flex items-center gap-12 text-base font-medium hidden">
+            <Link href='/'>
+              <p>Home</p>
+            </Link>
+            <Link href='/pricing'>
+              <p>Pricing</p>
+            </Link>
+            <Link href='/portfolio'>
+              <p>Portfolio</p>
+            </Link>
 
-            </div>
+          </div>
 
-            <div className="flex gap-8">
-              {
-                token ? <div className="flex items-center justify-center border rounded-full w-10 h-10"><User /> </div> : <Link href='/login'>
-                  {" "}
-                  <SiteButton className='bg-[#B6C7F5]/30 w-full hover:bg-[#B6C7F5]/30'>
-                    Sign In
-                  </SiteButton>
-                </Link>
-              }
+          <div className="lg:flex gap-8 hidden">
             {
-                token ? <button onClick={handleLogout} className="px-4  py-2 rounded-md border bg-white text-black "> Logout</button> : <div className='w-full sm:w-fit shadow-2xl'>
-                  <SiteButton className='bg-[#B6C7F5]/30 w-full hover:bg-[#B6C7F5]/30'>
-                    Start for Free
-                  </SiteButton>
-                </div>
+              token ? <div className="flex items-center justify-center border rounded-full w-10 h-10"><User /> </div> : <Link href='/login'>
+                {" "}
+                <SiteButton className='bg-[#B6C7F5]/30 w-full hover:bg-[#B6C7F5]/30'>
+                  Sign In
+                </SiteButton>
+              </Link>
             }
-            </div>
-
+            {
+              token ? <button onClick={handleLogout} className="px-4  py-2 rounded-md border bg-white text-black "> Logout</button> : <div className='w-full sm:w-fit shadow-2xl'>
+                <SiteButton className='bg-[#B6C7F5]/30 w-full hover:bg-[#B6C7F5]/30'>
+                  Start for Free
+                </SiteButton>
+              </div>
+            }
           </div>
 
           {/* Mobile Menu Icon */}
@@ -117,10 +112,9 @@ export default function Navbar() {
       </div>
 
       {/* MOBILE FULL SCREEN MENU */}
-      {/* MOBILE FULL SCREEN MENU */}
       {open && (
         <div
-          className='fixed inset-0 z-40 bg-blue-400 text-white'
+          className='fixed inset-0 z-40 bg-blue-400 text-white overflow-auto'
           style={{
             backgroundImage: "url(/images/MobileaMenu.png)",
             backgroundSize: "cover",
@@ -152,18 +146,25 @@ export default function Navbar() {
             </Link>
             <hr className='w-full' />
 
-            <button
+            {/* <button
               // onClick={() => setOpen(false)}
               className='mt-6 rounded-xl bg-white text-xl font-medium px-10 py-3 text-black w-full'>
               Start for Free
-            </button>
-            <Link href='/signup' className='w-full'>
+            </button> */}
+            <Link href='/login' className='w-full'>
               <button
                 onClick={() => setOpen(false)}
                 className=' rounded-xl w-full bg-white text-xl font-medium px-6 py-2.5 text-black'>
                 Sign In
               </button>
             </Link>
+            {
+              token ? <button onClick={handleLogout} className="rounded-xl w-full bg-white text-xl font-medium px-6 py-2.5 text-black"> Logout</button> : <div className='w-full sm:w-fit shadow-2xl'>
+                {/* <SiteButton className='bg-[#B6C7F5]/30 w-full hover:bg-[#B6C7F5]/30'>
+                  Start for Free
+                </SiteButton> */}
+              </div>
+            }
           </div>
         </div>
       )}
