@@ -10,13 +10,10 @@ export default function TrialCreatePage() {
     useEffect(() => {
         const createTrial = async () => {
             const token = Cookies.get("token");
-
-       
             if (!token) {
                 router.replace("/login");
                 return;
             }
-
             try {
                 const res = await fetch(
                     `${process.env.NEXT_PUBLIC_BACKEND_BASE}/trial/create`,
@@ -39,7 +36,6 @@ export default function TrialCreatePage() {
                 }
 
                 const data = await res.json();
-
                
                 if (data.redirectUrl) {
                     router.replace(data.redirectUrl);
@@ -58,7 +54,7 @@ export default function TrialCreatePage() {
     return (
         <div className="min-h-screen flex items-center justify-center">
             <p className="text-gray-600 text-lg">
-                Setting up your trial, please wait...
+                Setting up your trial, please waits...
             </p>
         </div>
     );
